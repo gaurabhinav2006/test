@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Love</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffe2e2 0%, #ffe6fa 100%);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        h1 {
+            color: #e23e57;
+            font-size: 7vw;
+            margin-top: 7vw;
+            margin-bottom: 7vw;
+            line-height: 1.2;
+            position: relative;
+            z-index: 2;
+            word-break: break-word;
+            letter-spacing: 1px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5vw;
+            margin-top: 9vw;
+            margin-bottom: 7vw;
+            position: relative;
+            z-index: 2;
+        }
+        .option-btn {
+            background: #88304e;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 5vw;
+            padding: 4vw 0;
+            box-shadow: 0 4px 12px #d85773b3;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            width: 86vw;
+            max-width: 410px;
+            min-width: 145px;
+        }
+        .option-btn:hover, .option-btn:active {
+            background: #f9a1bc;
+            color: #88304e;
+            transform: scale(1.07);
+        }
+        .back-btn {
+            position: absolute;
+            top: 2.5vw; left: 2.5vw;
+            background: #e23e57;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 2.8vw 7vw;
+            font-size: 4.5vw;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #88304e33;
+            z-index: 10;
+        }
+        .back-btn:active, .back-btn:hover {
+            background: #88304e;
+        }
+        .emoji-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .emoji {
+            position: absolute;
+            font-size: 6vw;
+            opacity: 0.27;
+            animation: float 10s ease-in-out infinite;
+        }
+        .emoji.e1  { top: 4%;   left: 13%;  animation-delay: 0s;}
+        .emoji.e2  { top: 11%;  left: 75%;  animation-delay: 1s;}
+        .emoji.e3  { top: 22%;  left: 6%;   animation-delay: 2s;}
+        .emoji.e4  { top: 29%;  left: 79%;  animation-delay: 3s;}
+        .emoji.e5  { top: 38%;  left: 30%;  animation-delay: 4s;}
+        .emoji.e6  { top: 51%;  left: 83%;  animation-delay: 5s;}
+        .emoji.e7  { top: 55%;  left: 15%;  animation-delay: 6s;}
+        .emoji.e8  { top: 72%;  left: 71%;  animation-delay: 7s;}
+        .emoji.e9  { top: 74%;  left: 39%;  animation-delay: 8s;}
+        .emoji.e10 { top: 83%;  left: 58%;  animation-delay: 9s;}
+        .emoji.e11 { top: 12%;  left: 45%;  animation-delay: 1.5s;}
+        .emoji.e12 { top: 72%;  left: 16%;  animation-delay: 2.5s;}
+        .emoji.e13 { top: 82%;  left: 86%;  animation-delay: 3.5s;}
+        .emoji.e14 { top: 27%;  left: 52%;  animation-delay: 4.5s;}
+        .emoji.e15 { top: 67%;  left: 62%;  animation-delay: 5.5s;}
+        @keyframes float {
+            0%   { transform: translateY(0)    rotate(0deg)   scale(1);}
+            25%  { transform: translateY(-4vw) rotate(5deg)   scale(1.07);}
+            50%  { transform: translateY(-8vw) rotate(-5deg)  scale(1.13);}
+            75%  { transform: translateY(-4vw) rotate(3deg)   scale(1.07);}
+            100% { transform: translateY(0)    rotate(0deg)   scale(1);}
+        }
+        #codePage {
+            display: none;
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #ffe2e2 0%, #ffe6fa 100%);
+            z-index: 3;
+            text-align: center;
+        }
+        .code-message {
+            font-size: 5vw;
+            color: #e23e57;
+            margin-top: 23vh;
+            margin-bottom: 2.2vh;
+            font-weight: 500;
+        }
+        .hint-message {
+            font-size: 4vw;
+            color: #88304e;
+            font-style: italic;
+            margin-bottom: 6vw;
+            padding: 0 2vw;
+        }
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2vw;
+        }
+        .code-input {
+            font-size: 8vw;
+            width: 44vw;
+            max-width: 210px;
+            min-width: 108px;
+            text-align: center;
+            padding: 2vw;
+            border-radius: 8px;
+            border: 2px solid #88304e;
+            margin-bottom: 4vw;
+            outline: none;
+        }
+        .num-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 17vw);
+            justify-content: center;
+            gap: 3vw;
+        }
+        .num-btn {
+            font-size: 5vw;
+            background: #fff5;
+            color: #88304e;
+            border: none;
+            border-radius: 7px;
+            width: 16vw;
+            min-width: 44px;
+            height: 9.5vw;
+            min-height: 44px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #88304e31;
+            transition: background 0.18s, transform 0.19s;
+        }
+        .num-btn:active {
+            background: #e23e57;
+            color: #fff;
+            transform: scale(1.15);
+        }
+        .code-action-btn {
+            font-size: 4vw;
+            margin-top: 6vw;
+            padding: 2.5vw 7vw;
+            border-radius: 8px;
+            border: none;
+            background: #88304e;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #d8577354;
+            transition: background 0.19s;
+        }
+        .code-action-btn:hover {
+            background: #e23e57;
+        }
+        .wrong {
+            color: #e23e57;
+            margin-top: 2.5vw;
+            font-weight: 700;
+            font-size: 4.2vw;
+            animation: shake 0.36s linear;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0);}
+            30% { transform: translateX(-2.5vw);}
+            60% { transform: translateX(2.5vw);}
+            100% { transform: translateX(0);}
+        }
+        #surprise1 {
+            display: none;
+            position: relative;
+            z-index: 2;
+            margin-top: 6vw;
+            padding-bottom: 6vw;
+        }
+        .eagle-image {
+            width: 92vw;
+            max-width: 480px;
+            height: auto;
+            max-height: 55vh;
+            margin-top: 6vw;
+            box-shadow: 0 6px 24px #e23e5740;
+            border-radius: 18px;
+        }
+        .message {
+            margin-top: 5vw;
+            font-family: 'Brush Script MT', cursive;
+            font-size: 8vw;
+            color: #e23e57;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        @media (min-width: 600px) {
+            .option-btn, .code-input, .num-btn, .code-action-btn {
+                font-size: 1.2em;
+            }
+            .message {
+                font-size: 2.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emoji-bg">
+        <span class="emoji e1">❤️</span>
+        <span class="emoji e2">😊</span>
+        <span class="emoji e3">🎉</span>
+        <span class="emoji e4">🎂</span>
+        <span class="emoji e5">💕</span>
+        <span class="emoji e6">😍</span>
+        <span class="emoji e7">🎈</span>
+        <span class="emoji e8">🌟</span>
+        <span class="emoji e9">💖</span>
+        <span class="emoji e10">🥳</span>
+        <span class="emoji e11">🎁</span>
+        <span class="emoji e12">💝</span>
+        <span class="emoji e13">🎊</span>
+        <span class="emoji e14">😘</span>
+        <span class="emoji e15">✨</span>
+    </div>
+    <div id="mainContent">
+        <button class="back-btn" style="display:none;" id="mainBackBtn" onclick="goBack()">Back</button>
+        <h1>HAPPY BIRTHDAY LOVE</h1>
+        <div class="options">
+            <button class="option-btn" onclick="optionClicked(2)">Surprise 1</button>
+            <button class="option-btn" onclick="optionClicked(3)">Surprise 2</button>
+            <button class="option-btn" onclick="optionClicked(4)">Surprise 3</button>
+            <button class="option-btn" onclick="optionClicked(5)">Surprise 4</button>
+            <button class="option-btn" onclick="optionClicked(6)">Surprise 5</button>
+        </div>
+    </div>
+    <div id="codePage">
+        <button class="back-btn" id="codeBackBtn" onclick="goBack()">Back</button>
+        <div class="code-message">
+            the page can only load only after you get the right code
+        </div>
+        <div class="hint-message">
+            hint : solve ∫₀<sub>π</sub>(60sin4x+63cos4x)dx or maybe a kiss to the most handsome guy around will help you
+        </div>
+        <div class="input-container">
+            <input class="code-input" id="codeInput" type="text" readonly placeholder="enter code" />
+            <div class="num-pad">
+                <button class="num-btn" onclick="addDigit('1')">1</button>
+                <button class="num-btn" onclick="addDigit('2')">2</button>
+                <button class="num-btn" onclick="addDigit('3')">3</button>
+                <button class="num-btn" onclick="addDigit('4')">4</button>
+                <button class="num-btn" onclick="addDigit('5')">5</button>
+                <button class="num-btn" onclick="addDigit('6')">6</button>
+                <button class="num-btn" onclick="addDigit('7')">7</button>
+                <button class="num-btn" onclick="addDigit('8')">8</button>
+                <button class="num-btn" onclick="addDigit('9')">9</button>
+                <button class="num-btn" onclick="deleteDigit()">←</button>
+                <button class="num-btn" onclick="addDigit('0')">0</button>
+                <button class="num-btn" onclick="clearDigits()">C</button>
+            </div>
+            <button class="code-action-btn" onclick="checkCode()">Submit</button>
+            <div id="wrongMessage"></div>
+        </div>
+    </div>
+    <div id="surprise1">
+        <button class="back-btn" id="eagleBackBtn" onclick="goBack()">Back</button>
+        <img src="eagle.jpg" alt="Bald Eagle" class="eagle-image" />
+        <div class="message">
+            this is an eagle
+        </div>
+    </div>
+    <script>
+        let rightCode = "0";
+        let pageStack = ["mainContent"]; // History stack
+
+        function showPage(pageId) {
+            // Hide all
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('codePage').style.display = 'none';
+            document.getElementById('surprise1').style.display = 'none';
+            // Show requested
+            document.getElementById(pageId).style.display = 'block';
+            
+            // Show/hide back buttons
+            document.getElementById('mainBackBtn').style.display = pageStack.length > 1 ? 'block' : 'none';
+            document.getElementById('codeBackBtn').style.display = pageStack.length > 1 ? 'block' : 'none';
+            document.getElementById('eagleBackBtn').style.display = pageStack.length > 1 ? 'block' : 'none';
+        }
+        function optionClicked(num) {
+            if(num === 2) {
+                pageStack.push("codePage");
+                showPage("codePage");
+                clearDigits();
+            } else {
+                alert("You clicked Surprise " + (num-1) + "!");
+            }
+        }
+        function addDigit(d) {
+            let input = document.getElementById('codeInput');
+            if(input.value.length < 7) { // Limit input length
+                input.value += d;
+            }
+            document.getElementById('wrongMessage').textContent = "";
+        }
+        function deleteDigit() {
+            let input = document.getElementById('codeInput');
+            input.value = input.value.slice(0, -1);
+            document.getElementById('wrongMessage').textContent = "";
+        }
+        function clearDigits() {
+            document.getElementById('codeInput').value = "";
+            document.getElementById('wrongMessage').textContent = "";
+        }
+        function checkCode() {
+            let input = document.getElementById('codeInput');
+            if(input.value === rightCode) {
+                pageStack.push("surprise1");
+                showPage("surprise1");
+            } else {
+                document.getElementById('wrongMessage').textContent = "wrong code";
+                document.getElementById('codeInput').value = "";
+                setTimeout(function(){
+                    document.getElementById('wrongMessage').textContent = "";
+                    pageStack = ["mainContent"];
+                    showPage("mainContent");
+                }, 1700);
+            }
+        }
+        function goBack() {
+            if(pageStack.length > 1) {
+                pageStack.pop();
+                let lastPage = pageStack[pageStack.length - 1];
+                showPage(lastPage);
+            }
+        }
+        // Initial state
+        showPage("mainContent");
+    </script>
+</body>
+</html>
